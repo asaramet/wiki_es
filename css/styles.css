@@ -1,0 +1,75 @@
+/* Global reset of paddings and margins for all HTML elements */
+* { margin:0; padding: 0; }
+
+body {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+p {
+  font-family: 'Maven Pro', sans-serif;
+}
+
+a, h1, h2, h3 {
+  font-family: 'Josefin Slab', serif;
+}
+
+header {
+  margin-top: 30px;
+  justify-content: space-between;
+  width: 75vw;
+	background: url(../images/bg_banner.gif) repeat;
+}
+
+.row {
+  display: flex;
+  flex-direction: row nowrap;
+  align-items: center;
+}
+
+#logo {
+  margin-left: 2vw;
+  height: auto;
+  width: 9vw;
+}
+
+#banner {
+  height: auto;
+  width: 40vw;
+  opacity: 0.8;
+}
+
+#nav-menu {
+  width: 75vw;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+@media only screen and (max-width: 1400px) {
+  header {
+    width: 90vw;
+  }
+
+  #banner {
+    width: 50vw;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  #logo {
+    width: 12vw;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  #banner {
+    width: 60vw;
+  }
+
+@media only screen and (max-width: 450px) {
+  #logo {
+    width: 15vw;
+  }
+}
