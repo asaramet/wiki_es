@@ -17,41 +17,18 @@
     </header>
 
     <section id="nav-menu" class="row">
+      <!-- Navmenu to select cluster -->
+      <div id="navHPC"></div>
 
-      <!-- Cluster choise -->
-      <nav class="navbar navbar-expand-md navbar-light">
-        <!-- toggle button for responsive design -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHPC" aria-controls="navbarHPC" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarHPC">
-          <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="#">bwGRiD</a>
-            <a class="nav-item nav-link" href="#">bwUniCluster</a>
-          </div>
-        </div>
-      </nav>
-
-      <!-- Chose Wiki section-->
-      <nav class="navbar navbar-expand-lg navbar-light">
-        <!-- toggle button for responsive design -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarGridInfo" aria-controls="navbarGridInfo" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarGridInfo">
-          <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="#">HOME</a>
-            <a class="nav-item nav-link" href="#">SSH</a>
-            <a class="nav-item nav-link" href="#">MATLAB</a>
-            <a class="nav-item nav-link" href="#">ANSYS</a>
-            <a class="nav-item nav-link" href="#">OpenFOAM</a>
-            <a class="nav-item nav-link" href="#">STAR-CCM+</a>
-          </div>
-        </div>
-      </nav>
+      <!-- Navmenu to select cluster specific section-->
+      <div id="navCluster"></div>
     </section>
-    <h1>Hello, world</h1>
-    <p>Lorem ipsu blablabla</p>
+
+    <!-- Load the coresponding cluster content on nav click -->
+    <section id="hpc-content"></section>
+
+    <!-- JS Script -->
+    <script type="text/javascript" src="./js/main.js"></script>
 
     <!-- Bootstrap JS scripts with jQuerry and Popper.js -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
