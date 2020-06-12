@@ -15,25 +15,49 @@ async function fetchHtmlAsText(url) {
 }
 
 // load html file content into div mentioned by id
-async function load_html(id, html) {
+async function loadHtml(id, html) {
     const contentDiv = document.getElementById(id);
     contentDiv.innerHTML = await fetchHtmlAsText(html);
 }
 
-/* Load html files */
-// load header
-load_html("header", stdFolder + "header.html");
+/* Clear active class from a navbar menu*/
+function clearActive(navbar) {
+  // reset active link to null
+  let active = navbar.getElementsByClassName("active");
+  active[0].className = active[0].className.replace("active", "");
+}
+
+/* Add 'active' to a navbar link */
+function setActive(elementID) {
+  document.getElementById(elementID).className += " active";
+}
 
 // load navigation menu to select cluster
-load_html("navHPC", stdFolder + "navHPC.html");
+function loadNavMenu(clusterID) {
+  loadHtml("navHPC", stdFolder + "navHPC.html").then(function () {
+    let navbar = document.getElementById("navbarHPC");
+    clearActive(navbar);
+    setActive(clusterID);
+  });
+}
+
+// load header
+loadHtml("header", stdFolder + "header.html");
 
 /* Load cluster specfic nav menu*/
 if (currentLocation.includes("/bwGRiD")) {
+  // load nav menu with bwGRiD active
+  loadNavMenu("bwGRiD");
   // load nav menu for bwGRiD cluster
-  load_html("navCluster", stdFolder + "navGRiD.html");
+  loadHtml("navCluster", stdFolder + "navGRiD.html");
 } else if (currentLocation.includes("/bwUniCluster")) {
+  // load nav menu with bwUniCluster active
+  loadNavMenu("bwUni");
   // load nav menu for bwUniCluster
-  load_html("navCluster", stdFolder + "navUni.html");
+  loadHtml("navCluster", stdFolder + "navUni.html");
+}
+else {
+  loadNavMenu("home");
 }
 
 /* Hide cluster specific nav menu on Home page */
@@ -45,22 +69,4 @@ if (currentLocation === "/index.html") {
   navCluster.style.visibility = "hidden";
 } else {
   navCluster.style.visibility = "visible";
-}
-
-/* Update active class in navbar */
-// get the navbarHPC
-let navbarHPC = document.getElementById("navHPC");
-
-// get all choises in navbarHPC
-let hpcBtns = navbarHPC.getElementsByClassName("nav-item");
-console.log(hpcBtns);
-
-// Loop through the buttons and add the active class to the current/clicked button
-for (let i = 0; i < hpcBtns.length; i++) {
-  console.log(hpcBtns[i]);
-  hpcBtns[i].addEventListener("click", function() {
-    let current = document.getElementsByClassName("active");
-    current[0].className = current[0].className.replace("active", "");
-    this.className += "active";
-  });
 }
