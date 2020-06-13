@@ -33,7 +33,7 @@ function setActive(elementID) {
 }
 
 // load navigation menu to select cluster
-function loadNavMenu(clusterID) {
+function loadNavHpc(clusterID) {
   loadHtml("navHPC", stdFolder + "navHPC.html").then(function () {
     let navbar = document.getElementById("navbarHPC");
     clearActive(navbar);
@@ -47,17 +47,13 @@ loadHtml("header", stdFolder + "header.html");
 /* Load cluster specfic nav menu*/
 if (currentLocation.includes("/bwGRiD")) {
   // load nav menu with bwGRiD active
-  loadNavMenu("bwGRiD");
-  // load nav menu for bwGRiD cluster
-  loadHtml("navCluster", stdFolder + "navGRiD.html");
+  loadNavHpc("bwGRiD");
 } else if (currentLocation.includes("/bwUniCluster")) {
   // load nav menu with bwUniCluster active
-  loadNavMenu("bwUni");
-  // load nav menu for bwUniCluster
-  loadHtml("navCluster", stdFolder + "navUni.html");
+  loadNavHpc("bwUni");
 }
 else {
-  loadNavMenu("home");
+  loadNavHpc("home");
 }
 
 /* Hide cluster specific nav menu on Home page */
