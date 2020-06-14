@@ -12,12 +12,11 @@ p {
   font-family: 'Maven Pro', sans-serif;
 }
 
-a, h1, h2, h3 {
+a, h1, h2, h3, h4 {
   font-family: 'Josefin Slab', serif;
 }
 
 header {
-  margin-top: 30px;
   justify-content: space-between;
   width: 75vw;
 	background: url(../images/bg_banner.gif) repeat;
@@ -27,6 +26,13 @@ header {
   display: flex;
   flex-direction: row nowrap;
   align-items: center;
+}
+
+#title {
+  width: 75vw;
+  margin: 10px 0;
+  justify-content: flex-end;
+  color: #81BEF7;
 }
 
 #logo {
@@ -47,8 +53,20 @@ header {
   align-items: flex-start;
 }
 
+#content {
+  margin-top: 2vh;
+  width: 75vw;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.btn-content{
+  display: inline-block;
+  padding: 2vh 0 4vh 1vw;
+}
+
 @media only screen and (max-width: 1400px) {
-  header {
+  header, #title, #content {
     width: 90vw;
   }
 

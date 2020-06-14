@@ -41,28 +41,38 @@ function loadNavHpc(clusterID) {
   });
 }
 
-// load header
-loadHtml("header", stdFolder + "header.html");
+function main() {
+  // load header
+  loadHtml("header", stdFolder + "header.html");
 
-/* Load cluster specfic nav menu*/
-if (currentLocation.includes("/bwGRiD")) {
-  // load nav menu with bwGRiD active
-  loadNavHpc("bwGRiD");
-} else if (currentLocation.includes("/bwUniCluster")) {
-  // load nav menu with bwUniCluster active
-  loadNavHpc("bwUni");
-}
-else {
-  loadNavHpc("home");
+  // get title component
+  let titleCmp = document.getElementById("title");
+
+  /* Load cluster specfic nav menu and add title string*/
+  if (currentLocation.includes("/bwGRiD")) {
+    // load nav menu with bwGRiD active
+    loadNavHpc("bwGRiD");
+    titleCmp.innerHTML = "bwGRiD for HE Users";
+  } else if (currentLocation.includes("/bwUniCluster")) {
+    // load nav menu with bwUniCluster active
+    loadNavHpc("bwUni");
+    titleCmp.innerHTML = "bwUniCluster for HE Users";
+  }
+  else {
+    loadNavHpc("home");
+    titleCmp.innerHTML = "High Performance Computing for HE Users";
+  }
+
+  /* Hide cluster specific nav menu on Home page */
+  // get the navCluster menu bar
+  let navCluster = document.getElementById("navCluster");
+
+  // hide it on Home page
+  if (currentLocation === "/index.html") {
+    navCluster.style.visibility = "hidden";
+  } else {
+    navCluster.style.visibility = "visible";
+  }
 }
 
-/* Hide cluster specific nav menu on Home page */
-// get the navCluster menu bar
-let navCluster = document.getElementById("navCluster");
-
-// hide it on Home page
-if (currentLocation === "/index.html") {
-  navCluster.style.visibility = "hidden";
-} else {
-  navCluster.style.visibility = "visible";
-}
+main();
