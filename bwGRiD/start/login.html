@@ -1,0 +1,197 @@
+<h1>bwGRiD Esslingen</h1>
+
+<h2>Registration</h2>
+<p>Granting access and issuing an user account for bwGRiD cluster in Esslingen, a registration at
+  <a target="_blank" href="https://bwservices.hs-esslingen.de/" target="_blank">HE services website</a>
+  is required. The site will open only from an university PC or over HE VPN.
+</p>
+<ol>
+  <li>The registration is done automatically through bwIDM service. Once you are on the
+    <a target="_blank" href="https://bwservices.hs-esslingen.de/">HE services website</a>,
+    select your home organisation from the list and click <code>Proceed</code>;
+  </li>
+  <li>You will be redirected to the <em>Identity Provider</em> of your home organisation.
+    (Hochschule Esslingen login site, for example);
+  </li>
+  <li>Enter your home-organisation user ID/username and your home-organisation password and click
+    the <code>Login</code> button;
+  </li>
+  <li>You will be redirected back to the registration website;</li>
+  <li>Select <code>bwGRiD Service Description</code> (on the left hand side)</li>
+  <p><img src="bwGRiD/images/bwGRiDLogin.png" alt="bwGRiD Service" height="85" class="image"></p>
+  <li>Click <code>Register</code>
+  <li>Set a service password for authentication on bwGRiD Cluster</li>
+</ol>
+
+<h2>Login</h2>
+<p>bwGRiD can be accessed through the secure shell protocol, SSH. Other protocols like telnet
+  or rlogin are not allowed for security reasons.
+</p>
+<p>In a Linux terminal use the following command to conect to the cluster:</p>
+<pre>$ ssh &ltUserID&gt@grid01.hs-esslingen.de</pre>
+
+<p>To open a GUI on the cluster through OpenSSH (which is usually installed on Linux based
+  systems), the '-X' or '-YC' option should be provided to 'ssh':
+<p>
+<pre>$ ssh -X &ltUserID&gt@grid01.hs-esslingen.de</pre>
+
+<h3>User ID / User name</h3>
+<p><code>&ltUserID&gt</code> is a placeholder for your university prefix and your
+user name as for example:
+</p>
+<p>Hochschule Esslingen &ltUserID&gt = es_username</p>
+<p>Uni Freiburg &ltUserID&gt = fr_username</p>
+<p>Uni Heidelberg &ltUserID&gt = hd_username</p>
+<p>etc.</p>
+
+<hr>
+
+<h1>Access from Microsoft Windows</h1>
+<h3>PuTTY, a free SSH and telnet client for Windows</h3>
+<p>In <code>PuTTY Configuration</code> window, under category <code>Session</code> fill in the
+  following fields:
+ </p>
+<pre>
+Host Name (or IP address) : grid01.hs-esslingen.de
+Port                      : 22
+Connection Type           : SSH </pre>
+
+<p>click on <code>Open</code>, enter your password and accept adding <em>host key</em>.</p>
+<p><strong>Note:</strong> it is possible to save the configuration and loade it later.</p>
+
+<h3>WinSCP, open-source SFTP, FTP, S3 and SCP client</h3>
+<p>Start WinSCP, fill in the following fields:</p>
+<pre>
+File Protocol           : SFTP
+Host Name               : grid01.hs-esslingen.de
+Port                    : 22
+User name               : &ltUser ID&gt </pre>
+
+<p>click <code>Login</code> and enter your password.</p>
+<p><strong>Note:</strong> it is possible to save the configured session and load it later.</p>
+
+<h3>MobaXterm ultimate toolbox for Windows</h3>
+<p>Basically MobaXterm is a combination of PuTTY and WinSCP plus some extra features.</p>
+
+<hr>
+
+<h1>Login node, <code>grid01</code></h1>
+<p>The login node on the cluster is the node you are automatically redirected once you login, named
+  <code>grid01</code>. On your terminal you'll see something like:
+</p>
+<pre>&ltUserID&gt@grid01:~ $</pre>
+<p>From here you get access to cluster resources, compute nodes, work directories, etc</p>
+<p>This login node is common for all the users on the cluster. Therefore, the activities
+  on grid01 are limited, not to block others from accessing cluster resources by running
+  resource demanding processes in the "lodge", not on the compute nodes.
+</p>
+<p>Here you may run for example:</p>
+<ul>
+  <li>fast code compilation;</li>
+  <li>pre- and post-processing of your batch jobs.</li>
+</ul>
+<p>To guarantee the cluster stability, it is <strong style="color:red">not allowed:</strong> to run
+compute jobs directly on the login node. Compute jobs must be submitted to the queueing system.
+Any compute job running on the login node, will be terminated without any notice.
+Any long-running compilation or any long-running pre or post-processing of batch jobs must also
+be submitted to the queueing system.
+</p>
+
+<hr>
+
+<h1>First steps on bwGRiD</h1>
+
+<p>Cluster provides an introduction and user manual that can be accessed from the login
+  node through the following command:
+</p>
+<pre>$ man bw-grid</pre>
+
+<p>There user can find detailed information about work-spaces, queueing system, compute nodes, etc.
+  Bellow a few basic steps will be described, to start working on the Esslinger bwGRiD cluster.
+</p>
+
+<h2>Home directory, workspaces and local scratch disks</h2>
+
+<p>By default a user's <code>$HOME</code> directory size is limited to a quota of 300MB.
+  Users can not exceed this disk space value and are required to create temporary workspaces
+  for jobs which needs a larger amount of disk space.
+</p>
+
+<p> To allocate a new workspace, named <code>WORKSPACE_NAME</code> for a period of
+<code>PERIOD_OF_EXISTANCE_IN_DAYS</code> days, do:
+</p>
+<pre>$ ws_allocate &ltWORKSPACE_NAME&gt &ltPERIOD_OF_EXISTANCE_IN_DAYS&gt</pre>
+
+<p>Workspace name should not start with "-", and can not contain any special characters or spaces.</p>
+<p>It can be allocated a maximum of 60 days.</p>
+
+<p>Further, the user can extend the active period of a workspace 16 times, with the
+  following command:
+</p>
+<pre>$ ws_extend &ltWORKSPACE_NAME&gt</pre>
+
+<p>To list all your available workspaces and their expiration dates, use:</p>
+<pre>$ ws_list</pre>
+
+<p>To see the allocated directory of a workspace:</p>
+<pre>$ ws_find &ltWORKSPACE_NAME&gt</pre>
+
+<h2>Environment Modules</h2>
+<p><strong>Environment Modules</strong> is a tool to help Linux users manage shell environment.
+  On bwGRiD <code>module</code> user interface is used to handle software specific shell variables
+  and configuration.
+</p>
+
+<p>To find out more about the <code>module</code> interface use the command with <code>--help</code>
+  option or read the man page
+</p>
+<pre>
+  $ module --help
+  $ man module</pre>
+
+<p>There are couple of commands mostly used to handle software managment with <code>module</code>:</p>
+
+<table class="describe">
+  <tr>
+    <th>module sub-command</th>
+    <th>Effect</th>
+  </tr>
+  <tr>
+    <td>module avail</td>
+    <td>List all available modules on the cluster</td>
+  </tr>
+  <tr>
+    <td>module avail &ltSECTION&gt</td>
+    <td>List all available modules in a specfic section<br>
+      For example, to list all CAE modules, do: <code>module avail cae</code>
+    </td>
+  </tr>
+  <tr>
+    <td>module avail &ltSECTION&gt/&ltPACKAGE&gt</td>
+    <td>List all available packages in a section<br>
+      For example, to list all OpenFOAM modules, do: <code>module avail cae/openfoam</code>
+    </td>
+  </tr>
+  <tr>
+    <td>module list</td>
+    <td>List all loaded modules</td>
+  </tr>
+  <tr>
+    <td>module load &ltSECTION&gt/&ltPACKAGE&gt/&ltVERSION&gt</td>
+    <td>Load the specific version of a module into your shell environment</td>
+  </tr>
+  <tr>
+    <td>module unload &ltSECTION&gt/&ltPACKAGE&gt/&ltVERSION&gt</td>
+    <td>Unload module</td>
+  </tr>
+  <tr>
+    <td>module help &ltSECTION&gt/&ltPACKAGE&gt/&ltVERSION&gt</td>
+    <td>Display some information about the module</td>
+  </tr>
+  <tr>
+    <td>module purge</td>
+    <td>Unload all loaded modules</td>
+  </tr>
+</table>
+
+<hr>

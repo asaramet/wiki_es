@@ -2,13 +2,14 @@
 * { margin:0; padding: 0; }
 
 body {
-  width: 100vw;
+  width: 99vw;
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: 'Maven Pro', sans-serif;
 }
 
-p {
+p, li, td, th {
   font-family: 'Maven Pro', sans-serif;
 }
 
@@ -26,6 +27,53 @@ header {
   display: flex;
   flex-direction: row nowrap;
   align-items: center;
+}
+
+.image, table {
+  margin: 4vh 3vw 2vh;
+}
+
+ul, ol {
+  list-style-position: inside;
+}
+
+pre {
+  border: dotted 1px;
+  width: 88%;
+  margin-left: 3vw;
+  margin-top: 3vh;
+  padding: 5px 1%;
+}
+
+table {
+  width: 88%;
+  border-collapse: collapse;
+}
+table.bash {
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
+table.bash td {
+  border-top: 1px solid black;
+  border-collapse: collapse;
+  padding-left: 25px;
+  height: 25px;
+}
+table.bash td:first-child {
+  width: 25%;
+  border-right: dashed 1px black;
+}
+
+table.describe td, th {
+  border: 1px solid black;
+  padding-left: 5px;
+  height: 40px;
+}
+table.describe th {
+  background-color: #e6e6e6;
+}
+table.describe td:first-child, th:first-child {
+  width: 35%;
 }
 
 #title {

@@ -8,8 +8,6 @@ loadHtml("navCluster", stdFolder + "navGRiD.html").then(function () {
 
   if (currentLocation.includes("/bwGRiD/index.html")) {
     setActive("start");
-  } else if (currentLocation.includes("matlab")) {
-    setActive("matlab");
   } else if (currentLocation.includes("ansys")) {
     setActive("ansys");
   } else if (currentLocation.includes("foam")) {

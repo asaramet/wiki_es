@@ -41,9 +41,18 @@ function loadNavHpc(clusterID) {
   });
 }
 
+// atach footer to body
+async function addFooter() {
+  let footer = document.getElementById("footer");
+  footer.style.margin = "4vh auto auto";
+  footer.innerHTML = await fetchHtmlAsText(stdFolder + "footer.html");
+}
+
 function main() {
   // load header
   loadHtml("header", stdFolder + "header.html");
+
+  addFooter();
 
   // get title component
   let titleCmp = document.getElementById("title");
