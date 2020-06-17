@@ -22,13 +22,28 @@
     </section>
 
     <!-- Load the coresponding cluster content on nav click -->
-    <section id="hpc-content">
-      <h1>Hello from bwUniCluster STAR-CCM+!</h1>
+    <section id="content">
+      <div id="intro"></div>
+      <div id="pod"></div>
+      <div id="pod_multi"></div>
+      <div id="starice"></div>
     </section>
+
+    <footer id="footer"></footer>
 
     <!-- JS Script -->
     <script type="text/javascript" src="../js/main.js"></script>
     <script type="text/javascript" src="../js/bwUniCluster.js"></script>
+
+    <!-- Load content -->
+    <script type="text/javascript">
+      const htmlFolder = "bwUniCluster/starccm/";
+
+      loadHtml("intro", htmlFolder + "intro.html");
+      loadHtml("pod", htmlFolder + "pod.html");
+      loadHtml("pod_multi", htmlFolder + "pod_multi.html");
+      loadHtml("starice", htmlFolder + "starice.html");
+    </script>
 
     <!-- Bootstrap JS scripts with jQuerry and Popper.js -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
