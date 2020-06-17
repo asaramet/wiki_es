@@ -9,7 +9,7 @@ body {
   font-family: 'Maven Pro', sans-serif;
 }
 
-p, li, td, th {
+p, li, td, th, .download-link {
   font-family: 'Maven Pro', sans-serif;
 }
 
@@ -39,10 +39,13 @@ ul, ol {
 
 pre {
   border: dotted 1px;
+  padding: 5px 1%;
+}
+
+pre, .download-dev {
   width: 88%;
   margin-left: 3vw;
   margin-top: 3vh;
-  padding: 5px 1%;
 }
 
 table {
@@ -111,6 +114,18 @@ table.describe td:first-child, th:first-child {
 .btn-content{
   display: inline-block;
   padding: 2vh 0 4vh 1vw;
+}
+
+.download-dev {
+  margin-bottom: 2vh;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.download-link {
+  color: #81BEF7;
+  border: 1px solid;
+  padding: 10px;
 }
 
 @media only screen and (max-width: 1400px) {
