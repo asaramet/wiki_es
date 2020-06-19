@@ -7,7 +7,7 @@
     "start": "nodemon ./bin/www",
     "local": "./bin/config.sh",
     "prod": "./bin/config.sh -p",
-    "sync": "./bin/sync.sh"
+    "sync": "npm run prod && ./bin/sync.sh && npm run local"
   },
   "keywords": [],
   "author": "",

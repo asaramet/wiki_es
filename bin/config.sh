@@ -8,12 +8,16 @@ prod() {
   find . -iname "*.html" | xargs -L1 sed -i "s|<base href=\"..\">|<base=\"${SERVER}\">|g"
 
   sed -i "s|<base href=\".\">|<base href=\"${SERVER}\">|g" index.html
+
+  sed -i "s|const mainFolder = \"../\"|const mainFolder = \"${SERVER}\"|g" js/main.js
 }
 
 localy() {
   sed -i "s|<base href=\"${SERVER}\">|<base href=\".\">|g" index.html
 
   find . -iname "*.html" | xargs -L1 sed -i "s|<base=\"${SERVER}\">|<base href=\"..\">|g"
+
+  sed -i "s|const mainFolder = \"${SERVER}\"|const mainFolder = \"../\"|g" js/main.js
 }
 
 help_menu() {
