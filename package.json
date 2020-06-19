@@ -5,6 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon ./bin/www",
+    "local": "./bin/config.sh",
+    "prod": "./bin/config.sh -p",
     "sync": "./bin/sync.sh"
   },
   "keywords": [],
