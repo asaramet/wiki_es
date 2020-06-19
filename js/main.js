@@ -1,6 +1,8 @@
 "use strict";
 
 /* Env consts */
+const getUrl = window.location;
+const baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
 const mainFolder = "../";
 const stdFolder = mainFolder + "stdHTML/";
 

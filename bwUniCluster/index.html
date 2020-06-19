@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>bwUniCluster Wiki</title>
     <base href="..">
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
       integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@400;700&family=Maven+Pro:wght@400;700&display=swap" rel="stylesheet">
@@ -23,6 +23,7 @@
 
     <!-- Load the coresponding cluster content on nav click -->
     <section id="content">
+      <div id="login"></div>
       <div id="submit"> </div>
       <div id="sinfo"> </div>
       <div id="chain"> </div>
@@ -38,6 +39,7 @@
     <script type="text/javascript">
       const htmlFolder = "bwUniCluster/start/";
 
+      loadHtml("login", htmlFolder + "login.html");
       loadHtml("submit", htmlFolder + "submit.html");
       loadHtml("sinfo", htmlFolder + "sinfo.html");
       loadHtml("chain", htmlFolder + "chain.html");
