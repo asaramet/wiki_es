@@ -3,21 +3,28 @@
 MD=`dirname $(readlink -f $0)`
 SERVER="https://www2.hs-esslingen.de/~asaramet/test/"
 
+BASE_LOCAL="<base href=\"..\">"
+BASE_INDEX_LOCAL="<base href=\".\">"
+BASE_SERVER="<base href=\"${SERVER}\">"
+
+MAIN_LOCAL="const mainFolder = \"../\";"
+MAIN_PROD="const mainFolder = \"${SERVER}\";"
+
 prod() {
 
-  find . -iname "*.html" | xargs -L1 sed -i "s|<base href=\"..\">|<base=\"${SERVER}\">|g"
+  find . -iname "*.html" | xargs -L1 sed -i "s|${BASE_LOCAL}|${BASE_SERVER}|g"
 
-  sed -i "s|<base href=\".\">|<base href=\"${SERVER}\">|g" index.html
+  sed -i "s|${BASE_INDEX_LOCAL}|${BASE_SERVER}|g" index.html
 
-  sed -i "s|const mainFolder = \"../\"|const mainFolder = \"${SERVER}\"|g" js/main.js
+  sed -i "s|${MAIN_LOCAL}|${MAIN_PROD}|g" js/main.js
 }
 
 localy() {
-  sed -i "s|<base href=\"${SERVER}\">|<base href=\".\">|g" index.html
+  sed -i "s|${BASE_SERVER}|${BASE_INDEX_LOCAL}|g" index.html
 
-  find . -iname "*.html" | xargs -L1 sed -i "s|<base=\"${SERVER}\">|<base href=\"..\">|g"
+  find . -iname "*.html" | xargs -L1 sed -i "s|${BASE_SERVER}|${BASE_LOCAL}|g"
 
-  sed -i "s|const mainFolder = \"${SERVER}\"|const mainFolder = \"../\"|g" js/main.js
+  sed -i "s|${MAIN_PROD}|${MAIN_LOCAL}|g" js/main.js
 }
 
 help_menu() {
