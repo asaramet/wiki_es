@@ -83,7 +83,7 @@ table.describe td:first-child, th:first-child {
   width: 75vw;
   margin: 10px 0;
   justify-content: flex-end;
-  color: #81BEF7;
+  color: #00aadc;
 }
 
 #logo {
@@ -116,6 +116,15 @@ table.describe td:first-child, th:first-child {
   padding: 2vh 0 4vh 1vw;
 }
 
+.btn-content button {
+  color: #b6163d;
+  border-color: #b6163d;
+}
+
+.btn-content button:hover {
+  background-color: #00aadc;
+}
+
 .download-dev {
   margin-bottom: 2vh;
   display: flex;
@@ -123,9 +132,35 @@ table.describe td:first-child, th:first-child {
 }
 
 .download-link {
-  color: #81BEF7;
+  color: #b6163d;
   border: 1px solid;
   padding: 10px;
+}
+
+.download-link:hover {
+  color: #00aadc;
+}
+
+/* change the brand and text color */
+.navbar .navbar-collapse .navbar-nav .nav-item {
+  color: #b6163d;
+}
+
+/* change the color of active or hovered links */
+.navbar .navbar-collapse .navbar-nav .nav-item.active {
+  color: #193058;
+}
+
+.navbar .navbar-collapse .navbar-nav .nav-item:hover {
+  color: #00aadc;
+}
+
+hr {
+  background-color: #b6163d;
+}
+
+strong {
+  color: #b6163d;
 }
 
 @media only screen and (max-width: 1400px) {
