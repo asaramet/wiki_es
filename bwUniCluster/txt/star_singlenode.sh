@@ -28,7 +28,7 @@ VERSION="2019.2"
 INPUT=test_case.sim
 
 # load the available STAR-CCM+ module
-module load cae/star-ccm+/${VERSION}
+module load cae/starccm+/${VERSION}
 
 # set license variables: server address and POD key string
 export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com
