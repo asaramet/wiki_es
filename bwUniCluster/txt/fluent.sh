@@ -22,7 +22,9 @@ echo "Starting at "
 date
 
 # load the software package
-module load cae/ansys/19.2
+module load cae/ansys/2020R2
+module load compiler/gnu/10.2
+module load mpi/openmpi/4.0
 
 HE_USER_ID=[HE_USER_ID]
 HE_LIZENZ_SERVER='lizenz-ansys.hs-esslingen.de'
@@ -53,7 +55,7 @@ echo "number of nodes: $nrNodes"
 # https://www.sharcnet.ca/Software/Ansys/16.2.3/en-us/help/flu_ug/flu_ug_JournalFile.html
 
 echo "Starting fluent..."
-fluent 3d -t$nrNodes -g -env -pib -mpi=intel -cnf=${HOSTS} -i fluentJournal.jou &&
+fluent 3d -t$nrNodes -g -env -pib -mpi=openmpi -cnf=${HOSTS} -i fluentJournal.jou &&
 
 # close the SSH control socket
 ssh -S ansys-socket -O exit ${HE_USER_ID}@${HE_COM_SERVER}
