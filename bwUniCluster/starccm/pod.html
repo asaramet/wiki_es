@@ -40,13 +40,13 @@ INPUT=test_case.sim
 # load the available STAR-CCM+ module
 module load cae/starccm+/${VERSION}
 
-# set license variables: server address and POD key string
-export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com
-export LM_PROJECT=&ltPOD_KEY&gt
-
 # calculate number of nodes
 np=${SLURM_NTASKS}
 echo "number of nodes: $np"
+
+# set license variables: server address and POD key string
+export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com
+export LM_PROJECT=&ltPOD_KEY&gt
 
 # start parallel star-ccm+ job
 starccm+ -power -np $np -batch $INPUT

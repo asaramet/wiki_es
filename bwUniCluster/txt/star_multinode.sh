@@ -31,12 +31,12 @@ INPUT=test_case.sim
 machinefile=hosts.star
 scontrol show hostname ${SLURM_JOB_NODELIST} > ${machinefile}
 
-# load the available STAR-CCM+ module
-module load cae/starccm+/${VERSION}
-
 # set license variables: server address and POD key string
 export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com
 export LM_PROJECT=<POD_KEY>
+
+# load the available STAR-CCM+ module
+module load cae/starccm+/${VERSION}
 
 # calculate number of nodes
 np=${SLURM_NTASKS}
