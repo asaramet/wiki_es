@@ -31,6 +31,10 @@ HE_USER_ID=<HE_USER_ID>
 # load the available STAR-CCM+ module
 module load cae/starccm+/$VERSION
 
+# calculate number of nodes
+np=${SLURM_NTASKS}
+echo "number of nodes: $np"
+
 # start a SSH tunnel, creating a control socket.
 DEAMON_PORT=49296
 SOCKET_NAME='starccm-socket'
@@ -42,10 +46,6 @@ ${HE_USER_ID}@comserver.hs-esslingen.de
 # set license variables: server address and POD key string
 export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com;1999@localhost
 export LM_PROJECT=<POD_KEY>
-
-# calculate number of nodes
-np=${SLURM_NTASKS}
-echo "number of nodes: $np"
 
 # start parallel star-ccm+ job
 starccm+ -power -np $np -batch $INPUT

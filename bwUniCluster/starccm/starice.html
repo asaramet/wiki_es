@@ -60,6 +60,10 @@ HE_USER_ID=&ltHE_USER_ID&gt
 # load the available STAR-CCM+ module
 module load cae/starccm+/$VERSION
 
+# calculate number of nodes
+np=${SLURM_NTASKS}
+echo "number of nodes: $np"
+
 # start a SSH tunnel, creating a control socket.
 DEAMON_PORT=49296
 ssh -MS starccm-socket -fnNT -L 1999:lizenz-cd-adapco.hs-esslingen.de:1999 \
