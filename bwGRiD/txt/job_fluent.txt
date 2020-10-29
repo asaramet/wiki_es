@@ -38,8 +38,8 @@ echo '''' >> fluent.hosts
 nrNodes=$(cat $PBS_NODEFILE |wc -l)
 echo "number of nodes: $nrNodes"
 
-#run fluent in parallel
-fluent 3d -t$nrNodes -rsh=ssh -g -pib -mpi=openmpi -cnf=fluent.hosts -i fluentInput.inp
+# run fluent in parallel, where fluentJournal.jou is a fluent Journal File
+fluent 3d -t$nrNodes -rsh=ssh -g -pib -mpi=openmpi -cnf=fluent.hosts -i fluentInput.jou
 
 #some post processing info:
 echo "Run completed at "

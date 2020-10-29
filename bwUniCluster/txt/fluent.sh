@@ -51,9 +51,6 @@ nrNodes=${SLURM_NTASKS}
 echo "number of nodes: $nrNodes"
 
 # run fluent in parallel, where fluentJournal.jou is a fluent Journal File
-# more about creating Journal Files:
-# https://www.sharcnet.ca/Software/Ansys/16.2.3/en-us/help/flu_ug/flu_ug_JournalFile.html
-
 echo "Starting fluent..."
 fluent 3d -t$nrNodes -g -env -pib -mpi=openmpi -cnf=${HOSTS} -i fluentJournal.jou &&
 
