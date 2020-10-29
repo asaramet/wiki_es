@@ -1,7 +1,7 @@
 <h2>Submit a STAR-CCM+ job</h2>
 
 <p>A job script to submit a batch job called <em>job_star.txt</em> that runs a STAR-CCM+
-  case file named <em>FS.sim</em> with STAR-CCM+ version 11.06.010, on 8 processors up to
+  case file named <em>FS.sim</em> with STAR-CCM+ version 2020.1, on 8 processors up to
   maximum 6 hours, looks like:
 </p>
 
@@ -25,7 +25,7 @@
 #PBS -M name@uni.de
 
 # specify the STAR-CCM+ version to load (available on the cluster)
-VERSION="11.06.010"
+VERSION="v2020.1"
 
 # specify case file name
 CASE_NAME=FS.sim
@@ -62,12 +62,11 @@ date</pre>
   </a>
 </p>
 
-<p>To start the job on the cluster, from the directory where your <em>job_star.sh</em> is, do:</p>
+<p>To start the job on the cluster, from the directory where your <em>job_star.txt</em> is, do:</p>
 
 <pre>$ qsub job_star.txt</pre>
 
-<p>You don't need to define any extra variables as everything is already defined in the
-  <em>job_star.sh</em> header, through <code>#PBS </code> keywords.
-</p>
+<p>qsub options are defined  defined in the <em>job_star.txt</em> header, through
+  <code>#PBS </code> keywords.</p>
 
 <hr>

@@ -1,18 +1,18 @@
 #!/bin/bash
-# Allocate one node
-#SBATCH --nodes=1
+# Allocate nodes
+#SBATCH --nodes=2
 # Number of program instances to be executed
-#SBATCH --ntasks=40
+#SBATCH --ntasks-per-node=40
 # Queue class https://wiki.bwhpc.de/e/BwUniCluster_2.0_Batch_Queues
-#SBATCH --partition=single
+#SBATCH --partition=multiple
 # Maximum run time of job
-#SBATCH --time=2:00:00
+#SBATCH --time=4:00:00
 # Give job a reasonable name
-#SBATCH --job-name=starccm-first-run
+#SBATCH --job-name=starccm-doe
 # File name for standard output (%j will be replaced by job id)
 #SBATCH --output=logs-%j.out
 # File name for error output
-#SBATCH --error=logs-%j.err
+#SBATCH --error=logs-%j.out
 # send an e-mail when a job begins, aborts or ends
 #SBATCH --mail-type=ALL
 # e-mail address specification
@@ -27,17 +27,21 @@ VERSION="2019.2"
 # specify sim case file name
 INPUT=test_case.sim
 
+# create machinefile
+machinefile=hosts.star
+scontrol show hostname ${SLURM_JOB_NODELIST} > ${machinefile}
+
 # load the available STAR-CCM+ module
-module load cae/starccm+/$VERSION
+module load cae/starccm+/${VERSION}
 
 # calculate number of nodes
 np=${SLURM_NTASKS}
-echo "number of nodes: $np"
+echo "number of procs: $np"
 
 # start a SSH tunnel, creating a control socket.
 HE_USER_ID=<HE_USER_ID>
-INTERMEDIATE_SERVER='comserver.hs-esslingen.de'
-LICENSE_SERVER='lizenz-cd-adapco.hs-esslingen.de'
+INTERMEDIATE_SERVER="comserver.hs-esslingen.de"
+LICENSE_SERVER="lizenz-cd-adapco.hs-esslingen.de"
 DEAMON_PORT=49296
 SOCKET_NAME='starccm-socket'
 
@@ -46,12 +50,13 @@ ssh -MS ${SOCKET_NAME} -fnNT -L 1999:${LICENSE_SERVER}:1999 \
 -L ${DEAMON_PORT}:${LICENSE_SERVER}:${DEAMON_PORT} \
 ${HE_USER_ID}@${INTERMEDIATE_SERVER}
 
-# set license variables: server address and POD key string
-export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com;1999@localhost
-export LM_PROJECT=<POD_KEY>
+# set license variables
+export CDLMD_LICENSE_FILE=1999@localhost
 
 # start parallel star-ccm+ job
-starccm+ -power -np $np -batch $INPUT
+starccm+ -tokensonly -np ${np} -rsh ssh -mpi intel -machinefile ${machinefile} -batch ${INPUT}
+
+[[ -f ${machinefile} ]] && rm -f ${machinefile}
 
 # close the SSH control socket
 ssh -S ${SOCKET_NAME} -O exit ${HE_USER_ID}@${INTERMEDIATE_SERVER}

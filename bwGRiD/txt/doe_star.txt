@@ -21,7 +21,7 @@
 VERSION="v2020.1"
 
 # specify case file name
-CASE_NAME=FS.sim
+CASE_NAME=FS_DOE.sim
 INPUT="$PBS_O_WORKDIR"/$CASE_NAME
 
 # switches to the directory from which 'qsub' command run:
@@ -38,12 +38,11 @@ module load esslingen/star-ccm+-$VERSION
 np=$(cat $PBS_NODEFILE | wc -l)
 echo "number of nodes: $np"
 
-# set the POD license key variable
-export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com
-export LM_PROJECT=xxSomePODkeyxx
+# set the local license server name
+export CDLMD_LICENSE_FILE=1999@lizenz-cd-adapco.hs-esslingen.de
 
 # start parallel star-ccm+ job
-starccm+ -power -rsh ssh -np $np -mppflags "-prot" -machinefile $PBS_NODEFILE -batch $INPUT
+starccm+ -tokensonly -rsh ssh -np $np -mppflags "-prot" -machinefile $PBS_NODEFILE -batch $INPUT
 
 #some post processing info:
 echo "Run completed at "

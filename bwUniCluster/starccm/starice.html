@@ -55,7 +55,6 @@ VERSION="2019.2"
 
 # specify sim case file name
 INPUT=test_case.sim
-HE_USER_ID=&ltHE_USER_ID&gt
 
 # load the available STAR-CCM+ module
 module load cae/starccm+/$VERSION
@@ -65,10 +64,16 @@ np=${SLURM_NTASKS}
 echo "number of nodes: $np"
 
 # start a SSH tunnel, creating a control socket.
+HE_USER_ID=&ltHE_USER_ID&gt
+INTERMEDIATE_SERVER='comserver.hs-esslingen.de'
+LICENSE_SERVER='lizenz-cd-adapco.hs-esslingen.de'
 DEAMON_PORT=49296
-ssh -MS starccm-socket -fnNT -L 1999:lizenz-cd-adapco.hs-esslingen.de:1999 \
--L ${DEAMON_PORT}:lizenz-cd-adapco.hs-esslingen.de:${DEAMON_PORT} \
-${HE_USER_ID}@comserver.hs-esslingen.de
+SOCKET_NAME='starccm-socket'
+
+[[ -f ${SOCKET_NAME} ]] && rm -f ${SOCKET_NAME}
+ssh -MS ${SOCKET_NAME} -fnNT -L 1999:${LICENSE_SERVER}:1999 \
+-L ${DEAMON_PORT}:${LICENSE_SERVER}:${DEAMON_PORT} \
+${HE_USER_ID}@${INTERMEDIATE_SERVER}
 
 # set license variables: server address and POD key string
 export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com;1999@localhost
@@ -82,7 +87,8 @@ echo "number of nodes: $np"
 starccm+ -power -np $np -batch $INPUT
 
 # close the SSH control socket
-ssh -S starccm-socket -O exit ${HE_USER_ID}@comserver.hs-esslingen.de
+ssh -S ${SOCKET_NAME} -O exit ${HE_USER_ID}@${INTERMEDIATE_SERVER}
+[[ -f ${SOCKET_NAME} ]] && rm -f ${SOCKET_NAME}
 
 echo "Run completed at "
 date
