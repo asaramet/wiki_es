@@ -25,7 +25,10 @@ date
 VERSION="2019.2"
 
 # specify sim case file name
-INPUT=test_case.sim
+INPUT="test_case.sim"
+
+# specify java macro file name if any
+JAVA_FILE=""
 
 # load the available STAR-CCM+ module
 module load cae/starccm+/${VERSION}
@@ -39,7 +42,7 @@ export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com
 export LM_PROJECT=<POD_KEY>
 
 # start parallel star-ccm+ job
-starccm+ -power -np $np -batch $INPUT
+starccm+ -power -np $np -batch ${JAVA_FILE} ${INPUT}
 
 echo "Run completed at "
 date

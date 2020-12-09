@@ -20,6 +20,9 @@
 # specify the STAR-CCM+ version to load (available on the cluster)
 VERSION="v2020.1"
 
+# specify java macro file name if any
+JAVA_FILE=""
+
 # specify case file name
 CASE_NAME=FS.sim
 INPUT="$PBS_O_WORKDIR"/$CASE_NAME
@@ -43,7 +46,7 @@ export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com
 export LM_PROJECT=xxSomePODkeyxx
 
 # start parallel star-ccm+ job
-starccm+ -power -rsh ssh -np $np -mppflags "-prot" -machinefile $PBS_NODEFILE -batch $INPUT
+starccm+ -power -rsh ssh -np $np -mppflags "-prot" -machinefile $PBS_NODEFILE -batch ${JAVA_FILE} ${INPUT}
 
 #some post processing info:
 echo "Run completed at "

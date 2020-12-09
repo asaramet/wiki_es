@@ -25,7 +25,10 @@ date
 VERSION="2019.2"
 
 # specify sim case file name
-INPUT=test_case.sim
+INPUT="test_case.sim"
+
+# specify java macro file name if any
+JAVA_FILE=""
 
 # create machinefile
 machinefile=hosts.star
@@ -54,7 +57,7 @@ ${HE_USER_ID}@${INTERMEDIATE_SERVER}
 export CDLMD_LICENSE_FILE=1999@localhost
 
 # start parallel star-ccm+ job
-starccm+ -tokensonly -np ${np} -rsh ssh -mpi intel -machinefile ${machinefile} -batch ${INPUT}
+starccm+ -tokensonly -np ${np} -rsh ssh -mpi intel -machinefile ${machinefile} -batch ${JAVA_FILE} ${INPUT}
 
 [[ -f ${machinefile} ]] && rm -f ${machinefile}
 

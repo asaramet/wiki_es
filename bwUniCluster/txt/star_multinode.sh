@@ -25,7 +25,10 @@ date
 VERSION="2019.2"
 
 # specify sim case file name
-INPUT=test_case.sim
+INPUT="test_case.sim"
+
+# specify java macro file name if any
+JAVA_FILE=""
 
 # create machinefile
 machinefile=hosts.star
@@ -43,7 +46,7 @@ np=${SLURM_NTASKS}
 echo "number of procs: $np"
 
 # start parallel star-ccm+ job
-starccm+ -power -np ${np} -rsh ssh -mpi intel -machinefile ${machinefile} -batch ${INPUT}
+starccm+ -power -np ${np} -rsh ssh -mpi intel -machinefile ${machinefile} -batch ${JAVA_FILE} ${INPUT}
 
 [[ -f ${machinefile} ]] && rm -f ${machinefile}
 
