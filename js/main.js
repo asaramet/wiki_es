@@ -66,6 +66,10 @@ function main() {
     // load nav menu with bwUniCluster active
     loadNavHpc("bwUni");
     titleCmp.innerHTML = "bwUniCluster for HE Users";
+  } else if (currentLocation.includes("/tutorials")) {
+    // load nav menu with bwUniCluster active
+    loadNavHpc("tutorials");
+    titleCmp.innerHTML = "Tutorials";
   }
   else {
     loadNavHpc("home");

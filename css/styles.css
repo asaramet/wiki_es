@@ -141,6 +141,12 @@ table.describe td:first-child, th:first-child {
   color: #00aadc;
 }
 
+.video {
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+}
+
 /* change the brand and text color */
 .navbar .navbar-collapse .navbar-nav .nav-item {
   color: #b6163d;
