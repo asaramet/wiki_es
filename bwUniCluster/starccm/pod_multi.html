@@ -56,7 +56,7 @@ export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com
 export LM_PROJECT=&ltPOD_KEY&gt
 
 # start parallel star-ccm+ job
-starccm+ -power -np ${np} -rsh ssh -mpi intel -machinefile ${machinefile} -batch ${JAVA_FILE} ${INPUT}
+starccm+ -power -np ${np} -rsh ssh -mpi openmpi -machinefile ${machinefile} -batch ${JAVA_FILE} ${INPUT}
 
 [[ -f ${machinefile} ]] && rm -f ${machinefile}
 

@@ -46,7 +46,7 @@ np=${SLURM_NTASKS}
 echo "number of procs: $np"
 
 # start parallel star-ccm+ job
-starccm+ -power -np ${np} -rsh ssh -mpi intel -machinefile ${machinefile} -batch ${JAVA_FILE} ${INPUT}
+starccm+ -power -np ${np} -rsh ssh -mpi openmpi -machinefile ${machinefile} -batch ${JAVA_FILE} ${INPUT}
 
 [[ -f ${machinefile} ]] && rm -f ${machinefile}
 

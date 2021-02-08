@@ -57,7 +57,7 @@ ${HE_USER_ID}@${INTERMEDIATE_SERVER}
 export CDLMD_LICENSE_FILE=1999@localhost
 
 # start parallel star-ccm+ job
-starccm+ -tokensonly -np ${np} -rsh ssh -mpi intel -machinefile ${machinefile} -batch ${JAVA_FILE} ${INPUT}
+starccm+ -tokensonly -np ${np} -rsh ssh -mpi openmpi -machinefile ${machinefile} -batch ${JAVA_FILE} ${INPUT}
 
 [[ -f ${machinefile} ]] && rm -f ${machinefile}
 
