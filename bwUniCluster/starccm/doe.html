@@ -5,8 +5,10 @@ used to run parallel jobs as well.</p>
 <p>If your license server has such tokens, you may run your application with DOE tokens
 using <code>-tokensonly</code> option.</p>
 
-<p>Of course to have access to your local license server you may need to use
-  SSH-tunneling as well.</p>
+<p><mark>Useful:</mark> to have access to your local license server you may need to use
+  a <a href="bwUniCluster/license.html#ssh-tunnel" target="_blank">SSH-tunnel</a> as well as
+  configure passwordless authentication over a <a href="bwUniCluster/license.html#ssh-key" target="_blank">SSH-key</a>
+</p>
 
 <p>The folowing script will start a STAR-CCM+ job on 2 nodes with 40 cpus each (80 cpus in total),
   with STAR-CCM+ v.2019.2, using DOE tokens over an SSH-tunnel through an intermediate
@@ -72,6 +74,15 @@ SOCKET_NAME='starccm-socket'
 ssh -MS ${SOCKET_NAME} -fnNT -L 1999:${LICENSE_SERVER}:1999 \
 -L ${DEAMON_PORT}:${LICENSE_SERVER}:${DEAMON_PORT} \
 ${HE_USER_ID}@${INTERMEDIATE_SERVER}
+
+# Test SSH - Tunneling
+echo "== ncat output:"
+nc -zv localhost 1999
+echo "== ncat end"
+
+echo "== ssh check output:"
+ssh -S ${SOCKET_NAME} -O check ${HE_USER_ID}@${INTERMEDIATE_SERVER}
+echo "== ssh chek end"
 
 # set license variables
 export CDLMD_LICENSE_FILE=1999@localhost

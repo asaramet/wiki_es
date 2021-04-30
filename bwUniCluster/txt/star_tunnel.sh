@@ -49,6 +49,15 @@ ssh -MS ${SOCKET_NAME} -fnNT -L 1999:${LICENSE_SERVER}:1999 \
 -L ${DEAMON_PORT}:${LICENSE_SERVER}:${DEAMON_PORT} \
 ${HE_USER_ID}@${INTERMEDIATE_SERVER}
 
+# Test SSH - Tunneling
+echo "== ncat output:"
+nc -zv localhost 1999
+echo "== ncat end"
+
+echo "== ssh check output:"
+ssh -S ${SOCKET_NAME} -O check ${HE_USER_ID}@${INTERMEDIATE_SERVER}
+echo "== ssh chek end"
+
 # set license variables: server address and POD key string
 export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com;1999@localhost
 export LM_PROJECT=<POD_KEY>

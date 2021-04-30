@@ -1,5 +1,7 @@
 <h1>ANSYS on bwUniCluster 2.0</h1>
-<h2>Reaching HE ANSYS license servers from bwUniCluster through SSH tunneling.</h2>
+<h2>Reaching HE ANSYS license servers from bwUniCluster over a
+  <a href="bwUniCluster/license.html#ssh-tunnel">SSH tunnel</a>.
+</h2>
 
 <p>ANSYS packages are connected to university's FLEXlm servers through two ports: 1055 and 2325.</p>
 
@@ -9,6 +11,10 @@
 
 <p>The following command will create an SSH master control socket with the respective ports tunneled
   through the <code>comserver.hs-esslingen.de</code>:
+</p>
+
+<p><mark>Useful:</mark> SSH-Tunnel will need a passwordless connection from the cluster to the
+  <code>comserver.hs-esslingen.de</code> through a <a href="bwUniCluster/license.html#ssh-key">SSH-key</a>.
 </p>
 
 <pre>
