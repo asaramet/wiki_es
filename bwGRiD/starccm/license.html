@@ -13,13 +13,12 @@
 export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com
 export LM_PROJECT=xxSomePODkeyxx
 
-starccm+ -power -rsh ssh -np $np -mppflags "-prot" -machinefile $PBS_NODEFILE -batch $INPUT
+starccm+ -power -np $np -batch $INPUT
 </pre>
 
 <p>or, you can specify your server and key directly into starccm+ command:</p>
 <pre>
-starccm+ -power -licpath 1999@flex.cd-adapco.com -podkey xxSomePODkeyxx \
--rsh ssh -np $np -mppflags "-prot" -machinefile $PBS_NODEFILE -batch $INPUT
+starccm+ -power -licpath 1999@flex.cd-adapco.com -podkey xxSomePODkeyxx -np $np -batch $INPUT
 </pre>
 
 <h3>DOE Tokens</h3>
@@ -38,13 +37,12 @@ starccm+ -power -licpath 1999@flex.cd-adapco.com -podkey xxSomePODkeyxx \
 <pre>
 export CDLMD_LICENSE_FILE=1999@lizenz-cd-adapco.hs-esslingen.de
 
-starccm+ -tokensonly -rsh ssh -np $np -mppflags "-prot" -machinefile $PBS_NODEFILE -batch $INPUT
+starccm+ -tokensonly -np $np -batch $INPUT
 </pre>
 
 <p>or</p>
 <pre>
-starccm+ -tokensonly -licpath 1999@lizenz-cd-adapco.hs-esslingen.de \
--rsh ssh -np $np -mppflags "-prot" -machinefile $PBS_NODEFILE -batch $INPUT
+starccm+ -tokensonly -licpath 1999@lizenz-cd-adapco.hs-esslingen.de -np $np -batch $INPUT
 </pre>
 
 <h3>Licenses for meshing, pre/post processing</h3>

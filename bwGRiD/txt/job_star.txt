@@ -46,7 +46,7 @@ export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com
 export LM_PROJECT=xxSomePODkeyxx
 
 # start parallel star-ccm+ job
-starccm+ -power -rsh ssh -np $np -mppflags "-prot" -machinefile $PBS_NODEFILE -batch ${JAVA_FILE} ${INPUT}
+starccm+ -power -np $np -batch ${JAVA_FILE} ${INPUT}
 
 #some post processing info:
 echo "Run completed at "

@@ -45,7 +45,7 @@ echo "number of nodes: $np"
 export CDLMD_LICENSE_FILE=1999@lizenz-cd-adapco.hs-esslingen.de
 
 # start parallel star-ccm+ job
-starccm+ -tokensonly -rsh ssh -np $np -mppflags "-prot" -machinefile $PBS_NODEFILE -batch ${JAVA_FILE} ${INPUT}
+starccm+ -tokensonly -np $np -batch ${JAVA_FILE} ${INPUT}
 
 #some post processing info:
 echo "Run completed at "
