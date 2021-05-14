@@ -49,6 +49,7 @@ pre, .download-dev {
 }
 
 table {
+  caption-side: top;
   width: 88%;
   border-collapse: collapse;
 }
@@ -77,6 +78,22 @@ table.describe th {
 }
 table.describe td:first-child, th:first-child {
   width: 35%;
+}
+
+table#queue td:first-child, th:first-child {
+  width: 10%;
+}
+
+table#queue td:nth-child(2), th:nth-child(2) {
+  width: 5%;
+}
+
+table#queue td:nth-child(3), th:nth-child(3) {
+  width: 25%;
+}
+
+table#queue td:last-child, th:last-child {
+  width: 60%;
 }
 
 #title {
