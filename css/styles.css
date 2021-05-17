@@ -186,6 +186,20 @@ strong {
   color: #b6163d;
 }
 
+/* Flow Chart CSS */
+.flow-chart {
+  padding: 50px 100px;
+}
+
+.svg-container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+/**/
 @media only screen and (max-width: 1400px) {
   header, #title, #content {
     width: 90vw;
