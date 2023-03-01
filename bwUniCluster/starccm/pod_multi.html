@@ -1,0 +1,79 @@
+<h2>A batch script for a STAR-CCM+ job on multi nodes, with a POD-key license.</h2>
+<p>The job will run on 4 nodes, 40 processors each, 160 tasks total, with STAR-CCM+ v.2021.3,
+  using a POD-key license.
+</p>
+
+<p>We are assuming the job is started by a Esslingen user with the following keyholders:</p>
+<ul>
+  <li>
+    HE User ID - <code>&ltHE_USER_ID&gt</code> 
+  </li>
+  <li>
+    POD key - a string instead of <code>&ltPOD_KEY&gt</code>
+  </li>
+</ul>
+
+<pre>
+#!/bin/bash
+# Allocate nodes
+#SBATCH --nodes=4
+# Number of program instances to be executed
+#SBATCH --ntasks-per-node=40
+# Queue class https://wiki.bwhpc.de/e/BwUniCluster_2.0_Batch_Queues
+#SBATCH --partition=multiple
+# Maximum run time of job
+#SBATCH --time=4:00:00
+# Give job a reasonable name
+#SBATCH --job-name=starccm-multi
+# File name for standard output (%j will be replaced by job id)
+#SBATCH --output=logs-%j.out
+# File name for error output
+#SBATCH --error=logs-%j.out
+# send an e-mail when a job begins, aborts or ends
+#SBATCH --mail-type=ALL
+# e-mail address specification
+#SBATCH --mail-user=&ltHE_USER_ID&gt@hs-esslingen.de
+
+echo "Starting at "
+date
+
+# specify the STAR-CCM+ version to load (available on the cluster)
+VERSION="2021.3"
+
+# specify sim case file name
+INPUT="test_case.sim"
+
+# specify java macro file name if any
+JAVA_FILE=""
+
+# create machinefile
+machinefile=hosts.star
+scontrol show hostname ${SLURM_JOB_NODELIST} > ${machinefile}
+
+# load the available STAR-CCM+ module
+module load cae/starccm+/${VERSION}
+
+# calculate number of nodes
+np=${SLURM_NTASKS}
+echo "number of procs: $np"
+
+# set license variables: server address and POD key string
+export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com
+export LM_PROJECT=&ltPOD_KEY&gt
+
+# start parallel star-ccm+ job
+starccm+ -power -np ${np} -rsh ssh -mpi openmpi -machinefile ${machinefile} -batch ${JAVA_FILE} ${INPUT}
+
+[[ -f ${machinefile} ]] && rm -f ${machinefile}
+
+echo "Run completed at "
+date
+</pre>
+
+<p class="download-dev">
+  <a class="download-link" href="bwUniCluster/txt/star_multinode.sh" download>
+    <img src="images/desktop-download.svg">&emsp;Download STAR-CCM+ Script
+  </a>
+</p>
+
+<hr>

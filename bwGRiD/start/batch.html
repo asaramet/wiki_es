@@ -1,0 +1,264 @@
+<h1>Batch Jobs on bwGRiD Cluster Esslingen</h1>
+<p>At Esslingen University of Applied Sciences, bwGRiD high performance computing cluster uses the
+  TORQUE resource manager (based on OpenPBS) and the Moab Workload Manager to manage and schedule jobs.
+</p>
+
+<h2>TORQUE overview</h2>
+<p>TORQUE is a resource management system for submitting and controlling jobs on HPC
+  clusters. It manages jobs submitted to various queues on a computing system, each queue
+  representing a group of resources with attributes necessary for the job.
+</p>
+
+<p>Commonly used TORQUE commands include:</p>
+<table class="bash">
+  <tr>
+    <td>qsub</td>
+    <td>Submit Job</td>
+  </tr>
+  <tr>
+    <td>qstat</td>
+    <td>Monitor the status of a job</td>
+  </tr>
+  <tr>
+    <td>qdel</td>
+    <td>Terminate a job prior to it's completion</td>
+  </tr>
+</table>
+
+<p>TORQUE includes numerous directives, which are used to specify resource requirements and other
+ attributes for batch and interactive jobs. This directives can appear as header lines (which start
+ with <code>#PBS</code>) in a batch job script or as command-line options to the <code>qsub</code>
+ command.
+</p>
+
+<h2>Job scripts</h2>
+<p>To run a job in batch mode on a high-performance computing system using TORQUE, first prepare a job
+ script that specifies the application you want to run and the resources required to run it, then submit
+ the script to TORQUE using <code>qsub</code> command. TORQUE passes your job and its requirements to the
+ system's job scheduler, which then dispatches your job whenever the required resources are available.
+</p>
+
+<p>A very basic job script might contain just a bash shell script. However, TORQUE job scripts most
+ commonly contain at least one executable command preceded by a list of directives that specify resources
+ and other attributes needed to execute the command (e.g., wall-clock time, the number of nodes and
+ processors, and filenames for job outputs and errors). These directives are listed in header lines
+ (lines beginning with <code>#PBS</code>), which should precede any executable lines in your job script.
+</p>
+<p>Additionally, your TORQUE job script should begin with a line that specifies the command interpreter
+ under which it should run.
+</p>
+
+<p>For example, a TORQUE job script for an MPI job might look like this:</p>
+<pre>
+#!/bin/bash
+#PBS -k o
+#PBS -l nodes=2:ppn=8:mem24gb
+#PBS -l walltime=00:30:00
+#PBS -M kenobi@hs-esslingen.de
+#PBS -m abe
+#PBS -N JobName
+#PBS -j oe
+
+mpiexec -np 16 -machinefile $PBS_NODEFILE ~/bin/binaryname
+</pre>
+
+<p>In the example above, the first line indicates that the script should be read using <code>bash</code>
+ command interpreter. Then, several header lines of TORQUE directives are included:
+</p>
+
+<table class="describe">
+  <tr>
+    <th>TORQUE directive</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>#PBS -k o
+    <td>Keeps the job output</td>
+  </tr>
+  <tr>
+    <td>#PBS -l nodes=2:ppn=8:mem24gb</td>
+    <td>Indicates the job requires 2 nodes, and 8 processors per node. And requests nodes with 24GB RAM*
+    </td>
+  </tr>
+  <tr>
+    <td>#PBS -l walltime=00:30:00</td>
+    <td>Indicated the job requires 30 minutes of wall-clock time to run</td>
+  </tr>
+  <tr>
+    <td>#PBS -M kenobi@hs-esslingen.de</td>
+    <td>Sends job-related email to kenobi@hs-esslingen.de</td>
+  </tr>
+  <tr>
+    <td>#PBS -m abe</td>
+    <td>Sends email if the job is (a) aborted, (b) begins, and when it
+     (e) ends</td>
+  </tr>
+  <tr>
+    <td>#PBS -N JobName</td>
+    <td>Names the job 'JobName'</td>
+  </tr>
+  <tr>
+    <td>#PBS -j oe</td>
+    <td>Joins standard output and standard error</td>
+  </tr>
+</table>
+
+<p>The last line in the example is the executable line. It tells the operating system to use
+  <code>mpiexec</code> command to execute <code>~/bin/binaryname</code> binary on 16 processors from the
+  machines listed in <code>$PBS_NODEFILE</code>
+</p>
+
+<p><strong>*</strong> Currently there are 2 types of nodes available on the cluster:
+  nodes with 24GB RAM (<code>mem24gb</code>) and nodes with 64GB RAM (<code>mem64gb</code>).
+  The 64GB RAM nodes are considerably less then 24GB RAM nodes, and you may have to wait longer
+  before your job starts. You can request up to maximum 8 processors for each node with 24GB RAM,
+  and 16 processors for each node with 64GB RAM.
+</p>
+
+<p>For more TORQUE directives, see the <code>qsub</code> manual page (enter <code>man qsub</code>)</p>
+
+<h2>Submitting jobs</h2>
+<p>To submit you job script (e.g., <code>job.pbs</code>), use the TORQUE <code>qsub</code> command.
+  If the command runs successfully, it will return a job ID to standard output, for example:
+</p>
+
+<pre>
+qsub job.pbs
+579883.intern1
+</pre>
+
+<p>If your job requires attribute values greater than the defaults, but less than the maximum allowed,
+  you can specify these with the <code>-l</code> (lowercase <code>L</code>, for "limit") option, either in your
+  job script (as explained in the previous section) or on the <code>qsub</code> command line. For example,
+  the following command submits <code>job.pbs</code>, using the <code>-l walltime</code> option to indicate
+  the job needs more than the default 30 minutes on wall-clock time:
+</p>
+
+<pre>
+qsub -l walltime=10:00:00 job.pbs
+</pre>
+
+<p><strong>Note:</strong> Command-line options will overwrite TORQUE directives in your job script.</p>
+
+<p>To include multiple options on the command line, use either one -l flag with several comma-separated
+  options, or multiple <code>-l</code> flags, each separated by a space. For example, the following two
+  command are equivalent:
+</p>
+
+<pre>
+qsub -l nodes=2:ppn=8:mem24gb,walltime=24:00:00 job.pbs
+qsub -l nodes=2:ppn=8:mem24gb -l walltime=24:00:00 job.pbs
+</pre>
+
+<p>Useful <code>qsub</code> options include:
+<table class="describe">
+  <tr>
+    <th>qsub option</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>-q &ltQUEUE_NAME&gt</td>
+    <td>Specifies a user-selectable queue</td>
+  </tr>
+  <tr>
+    <td>-r</td>
+    <td>Makes the job re-runnable</td>
+  </tr>
+  <tr>
+    <td>-a &ltDATE_TIME&gt</td>
+    <td>Executes the job only after a specific date and time</td>
+  </tr>
+  <tr>
+    <td>-V</td>
+    <td>Exports environment variables in your current environment to the job</td>
+  </tr>
+  <tr>
+    <td>-I</td>
+    <td>Makes the job run interactively (usually for testing purposes)</td>
+  </tr>
+</table>
+
+<h2>Monitoring jobs</h2>
+<p>To monitor the status of a queued or running job, use the <code>qstat</code> command.</p>
+<p>Useful <code>qstat</code> options include:</p>
+
+<table class="describe">
+  <tr>
+    <th>qstat option</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>-u &ltUSER_LIST</td>
+    <td>Displays jobs for users listed in <code>USER_LIST</code>
+  </tr>
+  <tr>
+    <td>-a</td>
+    <td>Displays all jobs</td>
+  </tr>
+  <tr>
+    <td>-r</td>
+    <td>Displays running jobs</td>
+  </tr>
+  <tr>
+    <td>-f</td>
+    <td>Displays the full listing of jobs (returns excessive detail)</td>
+  </tr>
+  <tr>
+    <td>-n</td>
+    <td>Displays nodes allocated to the jobs</td>
+  </tr>
+</table>
+
+<p>For example, to see all the jobs running in the <code>bw-multi</code> queue, enter:</p>
+<pre>qstat -r bw-multi</pre>
+
+<p>For more, see the <code>qstat</code> manual page (enter <code>man qstat</code>).
+
+<h2>Deleting jobs</h2>
+<p>To delete queued or running jobs, use <code>qdel</code> command:</p>
+
+<ul>
+  <li>To delete a specific job with id <code>JOB_ID</code>, enter:</li>
+    <pre>qdel &ltJOB_ID&gt</pre>
+  <li>Occasionally, a node becomes unresponsive to the TORQUE server's request to delete a job.
+   If that occurs, add the <code>-W</code> (uppercase W) option:</li>
+    <pre>qdel -W &ltJOB_ID&gt</pre>
+</ul>
+
+<p>For more, see the <code>qdel</code> manual page (enter <code>man qdel</code>).</p>
+
+<h2>Common Moab scheduler commands</h2>
+<p>For jobs monitoring and status, alternatively Moab scheduler commands can be used.
+  Frequently used Moab commands include:
+</p>
+
+<table class="describe">
+  <tr>
+    <th>Moab command</th>
+    <th>Function</th>
+  </tr>
+  <tr>
+    <td>showq</td>
+    <td>Display all the jobs in the queue. (Jobs may be in a number of states;
+      "Running" and "Idle" are the most common.)
+    </td>
+  </tr>
+  <tr>
+    <td>checkjob &ltJOB_ID&gt</td>
+    <td>Check the status of a job with id <code>JOB_ID</code>. For verbose mode, add
+      <code>-v</code> <br/>(e.g., <code>checkjob -v jobid</code>).
+    </td>
+  </tr>
+  <tr>
+    <td>showstart &ltJOB_ID&gt</td>
+    <td>Show an estimate of when your job with if <code>JOB_ID</code>  might start.</td>
+  </tr>
+  <tr>
+    <td>showres</td>
+    <td>Show current reservations</td>
+  </tr>
+  <tr>
+    <td>showbf</td>
+    <td>Show intervals and node counts presently available for backfill jobs.</td>
+  </tr>
+</table>

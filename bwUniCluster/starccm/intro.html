@@ -1,0 +1,37 @@
+<h1>STAR-CCM+ on bwUniCluster 2.0</h1>
+<h2>Licenses</h2>
+<p>CD-adapco, the company behind STAR-CCM+ offers, cheap or free of charge licenses for academical
+  projects.
+</p>
+
+<p>These licenses are managed by CD-adapco own license manager and can be used on demand by
+  the user owning a STAR-CCM+ POD-key.
+</p>
+
+<p>The license server is already connected to bwUniCluster and any user can run jobs pointing
+  the software to it (<code>flex.cd-adapco.com</code>), and the POD-key.
+</p>
+<p>To start a STAR-CCM+ job on bwUniCluster, you'll have to send a
+  <a target="_blank" href="https://wiki.bwhpc.de/e/BwUniCluster_2.0_Slurm_common_Features">
+    sbatch script</a>, to <code>sbatch</code> application.
+</p>
+
+<p>As the STAR-CCM+ license server in HE is managing all the licenses in the university, including
+  the ones in the PC-pools, you risk to block any STAR-CCM+ calculation made in "house" at the
+  university, as the total number of licenses is limited, and using some of them for HPC jobs
+  will put all the other machines at the university in a license queue, waiting for the HPC job
+  to finish.
+</p>
+
+<hr>
+
+<h2>A video tutorial on how to submit a STAR-CCM+ Job on bwUniCluster with licenses from the university server over a SSH tunnel</h2>
+<div class="video">
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/okejD7YjEbc?rel=0&vq=hd1080" frameborder="0" allow="accelerometer;
+    autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+<p>It's a basic example with some voice explanations of how to submit a STAR-CCM+ job and what are all those lines and words in a submit
+  script used for. More data and examples you can of course find in text form on this page.
+</p>
+<hr>

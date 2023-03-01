@@ -1,0 +1,113 @@
+<h2>A batch script for a STAR-CCM+ job on a single node, with a POD-key license and SSH tunnel.</h2>
+
+<p>SIEMENS provides some STAR-CCM+ addons, like STAR-ICE (engine simulation),
+  which require a specific license check not provided by the POD manager.
+</p>
+
+<p>In such cases the user needs access to the HE license manager to check if the addon is
+  eligible to run in STAR-CCM+ environment.
+</p>
+
+<p>A <a href="bwUniCluster/license.html#ssh-tunnel" target="_blank">SSH-tunnel</a>
+  listening to <code>lizenz-cd-adapco.hs-esslingen.de</code> on ports 1999 and a
+  FLEXlm deamon port set to variable, DEAMON_PORT (for example now at HE: 49296), is therefore required
+</p>
+
+<p><mark>Useful:</mark> Don't forget to configure the passwordless connection over a
+   <a href="bwUniCluster/license.html#ssh-key" target="_blank">SSH-key</a>.
+</p>
+
+<p>The script will be similar to the POD one, adding the SSH tunnel and mentioning it in
+  the license server check variable.
+</p>
+
+<p>The job will run on a single node, 40 processors, with STAR-CCM+ v.2021.3,
+  using a POD-key license.
+</p>
+
+<p>We are assuming the job is started by a Esslingen user with the following keyholders:</p>
+<ul>
+  <li>
+    HE User ID - <code>&ltHE_USER_ID&gt</code> 
+  </li>
+  <li>
+    POD key - a string instead of <code>&ltPOD_KEY&gt</code>
+  </li>
+</ul>
+
+<pre>
+#!/bin/bash
+# Allocate one node
+#SBATCH --nodes=1
+# Number of program instances to be executed
+#SBATCH --ntasks=40
+# Queue class https://wiki.bwhpc.de/e/BwUniCluster_2.0_Batch_Queues
+#SBATCH --partition=single
+# Maximum run time of job
+#SBATCH --time=2:00:00
+# Give job a reasonable name
+#SBATCH --job-name=starccm-first-run
+# File name for standard output (%j will be replaced by job id)
+#SBATCH --output=logs-%j.out
+# File name for error output
+#SBATCH --error=logs-%j.out
+# send an e-mail when a job begins, aborts or ends
+#SBATCH --mail-type=ALL
+# e-mail address specification
+#SBATCH --mail-user=&ltHE_USER_ID&gt@hs-esslingen.de
+
+echo "Starting at "
+date
+
+# specify the STAR-CCM+ version to load (available on the cluster)
+VERSION="2021.3"
+
+# specify sim case file name
+INPUT="test_case.sim"
+
+# specify java macro file name if any
+JAVA_FILE=""
+
+# load the available STAR-CCM+ module
+module load cae/starccm+/$VERSION
+
+# calculate number of nodes
+np=${SLURM_NTASKS}
+echo "number of nodes: $np"
+
+# start a SSH tunnel, creating a control socket.
+HE_USER_ID=&ltHE_USER_ID&gt
+INTERMEDIATE_SERVER='comserver.hs-esslingen.de'
+LICENSE_SERVER='lizenz-cd-adapco.hs-esslingen.de'
+DEAMON_PORT=49296
+SOCKET_NAME='starccm-socket'
+
+[[ -f ${SOCKET_NAME} ]] && rm -f ${SOCKET_NAME}
+ssh -MS ${SOCKET_NAME} -fnNT -L 1999:${LICENSE_SERVER}:1999 \
+-L ${DEAMON_PORT}:${LICENSE_SERVER}:${DEAMON_PORT} \
+${HE_USER_ID}@${INTERMEDIATE_SERVER}
+
+# set license variables: server address and POD key string
+export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com;1999@localhost
+export LM_PROJECT=&ltPOD_KEY&gt
+
+# calculate number of nodes
+np=${SLURM_NTASKS}
+echo "number of nodes: $np"
+
+# start parallel star-ccm+ job
+starccm+ -power -np $np -batch ${JAVA_FILE} ${INPUT}
+
+# close the SSH control socket
+ssh -S ${SOCKET_NAME} -O exit ${HE_USER_ID}@${INTERMEDIATE_SERVER}
+[[ -f ${SOCKET_NAME} ]] && rm -f ${SOCKET_NAME}
+
+echo "Run completed at "
+date
+</pre>
+
+<p class="download-dev">
+  <a class="download-link" href="bwUniCluster/txt/star_tunnel.sh" download>
+    <img src="images/desktop-download.svg">&emsp;Download STAR-CCM+ Script
+  </a>
+</p>

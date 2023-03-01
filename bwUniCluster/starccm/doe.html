@@ -1,0 +1,103 @@
+<h2>A batch script for a STAR-CCM+ job on multi nodes, with DOE Tokens.</h2>
+
+<p>Usually STAR-CCM+ academical license server provides a number of DOE tokens that can be
+used to run parallel jobs as well.</p>
+<p>If your license server has such tokens, you may run your application with DOE tokens
+using <code>-tokensonly</code> option.</p>
+
+<p><mark>Useful:</mark> to have access to your local license server you may need to use
+  a <a href="bwUniCluster/license.html#ssh-tunnel" target="_blank">SSH-tunnel</a> as well as
+  configure passwordless authentication over a <a href="bwUniCluster/license.html#ssh-key" target="_blank">SSH-key</a>
+</p>
+
+<p>The folowing script will start a STAR-CCM+ job on 2 nodes with 40 cpus each (80 cpus in total),
+  with STAR-CCM+ v.2021.3, using DOE tokens over an SSH-tunnel through an intermediate
+  server (comserver.hs-esslingen.de) to access the Esslingen license server (lizenz-cd-adapco.hs-esslingen.de)
+</p>
+
+<p>We are assuming the job is started by a Esslingen user with the following keyholders:</p>
+<ul>
+  <li>
+    HE User ID - <code>&ltHE_USER_ID&gt</code> 
+  </li>
+</ul>
+
+<pre>
+#!/bin/bash
+# Allocate nodes
+#SBATCH --nodes=2
+# Number of program instances to be executed
+#SBATCH --ntasks-per-node=40
+# Queue class https://wiki.bwhpc.de/e/BwUniCluster_2.0_Batch_Queues
+#SBATCH --partition=multiple
+# Maximum run time of job
+#SBATCH --time=4:00:00
+# Give job a reasonable name
+#SBATCH --job-name=starccm-doe
+# File name for standard output (%j will be replaced by job id)
+#SBATCH --output=logs-%j.out
+# File name for error output
+#SBATCH --error=logs-%j.out
+# send an e-mail when a job begins, aborts or ends
+#SBATCH --mail-type=ALL
+# e-mail address specification
+#SBATCH --mail-user=&ltHE_USER_ID&gt@hs-esslingen.de
+
+echo "Starting at "
+date
+
+# specify the STAR-CCM+ version to load (available on the cluster)
+VERSION="2021.3"
+
+# specify sim case file name
+INPUT="test_case.sim"
+
+# specify java macro file name if any
+JAVA_FILE=""
+
+# create machinefile
+machinefile=hosts.star
+scontrol show hostname ${SLURM_JOB_NODELIST} > ${machinefile}
+
+# load the available STAR-CCM+ module
+module load cae/starccm+/${VERSION}
+
+# calculate number of nodes
+np=${SLURM_NTASKS}
+echo "number of procs: $np"
+
+# start a SSH tunnel, creating a control socket.
+HE_USER_ID=&ltHE_USER_ID&gt
+INTERMEDIATE_SERVER='comserver.hs-esslingen.de'
+LICENSE_SERVER='lizenz-cd-adapco.hs-esslingen.de'
+DEAMON_PORT=49296
+SOCKET_NAME='starccm-socket'
+
+[[ -f ${SOCKET_NAME} ]] && rm -f ${SOCKET_NAME}
+ssh -MS ${SOCKET_NAME} -fnNT -L 1999:${LICENSE_SERVER}:1999 \
+-L ${DEAMON_PORT}:${LICENSE_SERVER}:${DEAMON_PORT} \
+${HE_USER_ID}@${INTERMEDIATE_SERVER}
+
+# set license variables
+export CDLMD_LICENSE_FILE=1999@localhost
+
+# start parallel star-ccm+ job
+starccm+ -tokensonly -np ${np} -rsh ssh -mpi openmpi -machinefile ${machinefile} -batch ${JAVA_FILE} ${INPUT}
+
+[[ -f ${machinefile} ]] && rm -f ${machinefile}
+
+# close the SSH control socket
+ssh -S ${SOCKET_NAME} -O exit ${HE_USER_ID}@${INTERMEDIATE_SERVER}
+[[ -f ${SOCKET_NAME} ]] && rm -f ${SOCKET_NAME}
+
+echo "Run completed at "
+date
+</pre>
+
+<p class="download-dev">
+  <a class="download-link" href="bwUniCluster/txt/star_doe.sh" download>
+    <img src="images/desktop-download.svg">&emsp;Download STAR-CCM+ DOE Script
+  </a>
+</p>
+
+<hr>

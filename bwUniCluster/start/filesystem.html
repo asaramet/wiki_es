@@ -1,0 +1,46 @@
+<h2>File Systems</h2>
+<p>In addition to high-performance computing resources, the bwUniCluster
+  <a href="https://wiki.bwhpc.de/e/BwUniCluster_2.0_Hardware_and_Architecture">hardware architecture</a>
+   includes a parallel hardware
+  Lustre file system that is connected to the computing nodes via a high-end InfiniBand fiber-optic network.
+</p>
+<p>As a result, not all data is securely backed up or stored on the cluster. And you, the user, have to decide how best to
+store your data to take full advantage of the parallel file system or the backup capabilities of the cluster.
+</p>
+
+<p>The following data storage systems are offered on the cluster with some recommendations:</p>
+<ul>
+  <li>$HOME folder - suitable for permanently required data. The user can access this folder from all cluster nodes and a
+    regular backup of the data in this folder is carried out automatically. But it has a qouta limit. It is therfore recomended,
+    that you keep in the $HOME directory the files that you regularly use. Like for example, configuration files, source code,
+    executable programs, etc. <br><br>
+    The default limit quota for the $HOME directory, on the cluster is 1 TiB and 10 million inodes (files or folders) per user.
+    To check the current quota usage and limit, use the command:<br><br>
+    <pre>$ lfs quota -uh $(whoami) $HOME</pre>
+
+    In addition to the quota limit per user, there is a limit per university, which is based on the financial share of
+    the universities for the bwUniCluster. The following command will show your this quota: <br><br>
+    <pre>lfs quota -ph $(grep $(echo $HOME | sed -e "s|/[^/]*/[^/]*$||") /pfs/data5/project_ids.txt | cut -f 1 -d\ ) $HOME</pre>
+  </li>
+  <li>Workspaces - a parallel file system designed for parallel data access and high throughput of large files. It is able to
+    provide parallel data access with transfer rates of up to 54 GB/s for writing and reading. It is perfectly designed for storing large, non-permanent data sets,
+    e.g. restarting files or output data that have to be post-processed. <br><br>
+    Workspaces have a lifetime, and when it expires, the data on it is permanently removed. The maximum lifespan of a workspace is 60 days, but it can be extended
+    three times at the end of this period for a maximum of 240 days after the workspace is created.
+    If a workspace accidentally expires, the data can still be restored for a limited time (a few weeks).
+    In this case you should create a new workspace and state the name of the new and the expired one in a ticket or by e-mail to the bwUniCluster hotline.<br><br>
+
+    You can find more information about creating and managing workspaces <a href="https://wiki.bwhpc.de/e/Workspace">here</a>. <br><br>
+ </li>
+ <li>$TMP folder - a local node directory on bwUniCluster. While all tasks of a parallel application access the same $HOME and Workspace directory, the $TMP
+   directory is only local to the specific node on the cluster. Different tasks of a parallel application may and should use different directories in a multi-node run.
+   This is exactly the folder that should be used for temporary files accessed by individual tasks. All nodes have fast SSDs local storage devices that are used to
+   store data in $TMP.
+ </li>
+</ul>
+
+<p>You can always find detailed information on file systems on the official
+  <a href="https://wiki.bwhpc.de/e/BwUniCluster_2.0_Hardware_and_Architecture">wiki page</a>
+  of bwUniCluster.</p>
+
+<hr>

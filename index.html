@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HPC for HE</title>
+    <base href=".">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@400;700&family=Maven+Pro:wght@400;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+
+    <h4 class="row" id="title"></h4>
+    <header class="row" id="header"></header>
+
+    <section id="nav-menu" class="row">
+      <!-- Navmenu to select cluster -->
+      <div id="navHPC"></div>
+
+      <!-- Navmenu to select cluster specific section-->
+      <div id="navCluster"></div>
+    </section>
+
+    <!-- Load the coresponding cluster content on nav click -->
+    <section id="content">
+      <h1>About</h1>
+      <p>An introductory as well as a wiki page to High Performance Computing Clusters for users
+        from University of Applied Sciences Esslingen, also known as Hochschule Esslingen (HE).
+      </p>
+      <p>HE academic researchers are provided with direct access to bwGriD and bwUniCluster platforms,
+        free of charge, in order to run any non commercial calculations or
+        simulations.
+      </p>
+      <p>Each cluster has its own infrastructure and uses cluster specific resource managment tools,
+        software packages, libraries, development tools, etc. An user may have to adjust the work procedures
+        for each cluster accordingly.
+      </p>
+
+      <p><strong>Note:</strong> after you choose the cluster, in the upper right corner you'll get a
+        cluster specific navigation menu, for cluster specific wiki sections.
+      </p>
+
+      <hr>
+
+      <h1>bwGRiD Esslingen</h1>
+      <p>The Baden-Württemberg Grid (bwGRiD) was part of the D-Grid initiative and provided more
+        than 12,000 cores for research and science at 8 locations in Baden-Württemberg.
+        Participating partners were the Universities of Freiburg, Heidelberg, Tübingen, Mannheim
+        and the Ulm/Konstanz network, the Esslingen University of Applied Sciences, the Karlsruhe
+        Institute of Technology and the High Performance Computing Centre (HLRS) in Stuttgart.
+      </p>
+      <p>A NEC LX-2400 cluster, it is an old project with an outdated hardware,
+        access to which is still granted for HE users. Currently it has about 75 Nodes with Intel
+        Nehalem processors with 2.27GHz and 2.8GHz with 8 cores each and 22 Nodes with 32 virtual cores,
+        totaling in about 1264 active cores. Each node has 24GB and 64GB memory respectively.
+        All systems are without local hard disk.
+      </p>
+      <p>The file system used is the NEC LXFS with 36 TB, a high-performance parallel file syastem
+        based on Lustre.
+      </p>
+      <p>Each blade is connected to the local network with Gigabit Ethernet. This network is used for
+        administration and for logging on to the systems. Each blade has a QDR InfiniBand interface
+        (transfer rate: 40 GBit/Sec) for the transfer of data and results of calculations. The InfiniBand
+        network is designed as a HyperCube with a total of 192 edge ports. Both the data exchange of
+        parallel programs and the connection to the NEC LXFS are carried out via InfiniBand.
+      </p>
+      <p>Workload manager is a combination between MOAB-TORQUE and PBS.</p>
+      <div class="btn-content">
+        <button class="btn btn-outline-secondary" type="button"
+          onclick="window.location.href='bwGRiD/index.html'">bwGRiD</button>
+      </div>
+
+      <hr>
+
+      <h1>bwUniCluster 2.0</h1>
+      <p>As part of <a href="https://www.bwhpc.de/">bwHPC project</a>, bwUniCluster is a modern
+        system which consists of more than 840 SMP nodes with 64-bit Intel Xeon processors,
+        providing access to users from multiple universities of Baden-Württemberg.
+      </p>
+      <p>Each node on the cluster has at least two Intel Xeon processor, local memory from 96GB
+        to 3TB, local SSD disks, network adapters and optionally accelerators (NVIDIA Tesla V100).
+        All nodes are connected over a fast InfiniBand interconnect and also connected to an
+        external file system based on Lustre.
+      </p>
+      <p>More info about hardware and architecture you may find
+        <a href="https://wiki.bwhpc.de/e/BwUniCluster_2.0_Hardware_and_Architecture">here</a>.</p>
+      <p>Workload manager: SLURM.</p>
+
+      <div class="btn-content">
+        <button class="btn btn-outline-secondary" type="button"
+          onclick="window.location.href='bwUniCluster/index.html'">bwUniCluster</button>
+      </div>
+
+      <hr>
+
+      <h1>Disclaimer</h1>
+      <p>These systems are not designed to collect and backup any data. Therefore, it is highly
+        recommended not to store any data you are not afraid to lose on the clusters.
+      </p>
+      <p>For some extra questions you may try to contact A.Saramet on: alexandru.saramet@hs-esslingen.de </p>
+    </section>
+
+    <footer id="footer"></footer>
+
+    <!-- JS Script -->
+    <script type="text/javascript" src="js/main.js"></script>
+
+    <!-- Bootstrap JS scripts with jQuerry and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+  </body>
+</html>

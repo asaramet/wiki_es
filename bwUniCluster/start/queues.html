@@ -1,0 +1,88 @@
+<h2>Job submittion queues (partitions)</h2>
+
+<p>As a general purpose type of cluster, bwUniCluster offers a platform for a multitude of jobs which may differ in
+  the required compute resources, such as needed processing CPU power, quantity of RAM, GPU power, (wall-) time etc.
+</p>
+
+<p>For better allocation of hardware resources to specific jobs, a queue partitioning system is offerd to the user, which have
+to assign his jobs manually to the specific queue (aka partition).</p>
+
+<p>The job can be asigned to a specific queue with the command <code>sbatch -p <i>queue_name</i></code>
+or in a script through <code>#SBATCH --partition=<i>queue_name</i></code> option.</p>
+
+<p><mark>Note:</mark>The specification of a queue is obligatory on bwUniCluster!</p>
+
+<table class="describe" id="queue">
+  <caption>bwUniCluster 2.0 job queues (partitions)</caption>
+  <tr>
+    <th>Queue name</th>
+    <th>Node</th>
+    <th>Default resources</th>
+    <th>Minimum resources</th>
+    <th>Maximum resources</th>
+  </tr>
+  <tr>
+    <td>dev_single</td>
+    <td>thin</td>
+    <td>time=10, mem-per-cpu=1125mb</td>
+    <td></td>
+    <td>time=30, nodes=1, mem=180000mb,ntasks-per-node=40, (threads-per-core=2)
+    6 nodes are reserved for this queue. Only for development, i.e. debugging or
+    performance optimization</td>
+  </tr>
+  <tr>
+    <td>single</td>
+    <td>thin</td>
+    <td>time=30, mem-per-cpu=1125mb</td>
+    <td></td>
+    <td>time=72:00:00, nodes=1, mem=180000mb, ntasks-per-node=40, (threads-per-core=2)</td>
+  </tr>
+  <tr>
+    <td>dev_multiple</td>
+    <td>thin</td>
+    <td>time=10, mem-per-cpu=1125mb</td>
+    <td>nodes=2</td>
+    <td>time=30, nodes=4, mem=90000mb, ntasks-per-node=40, (threads-per-code=2)
+    8 nodes are reserved for this queue. Only for development, i.e. debugging or
+    performance optimization</td>
+  </tr>
+  <tr>
+    <td>multiple</td>
+    <td>thin</td>
+    <td>time=30, mem-per-cpu=1125mb</td>
+    <td>nodes=2</td>
+    <td>time=72:00:00, mem=90000mb, nodes=128, ntasks-per-node=40, (threads-per-core=2)</td>
+  </tr>
+  <tr>
+    <td>fat</td>
+    <td>fat</td>
+    <td>time=10, mem-per-cpu=18750mb</td>
+    <td></td>
+    <td>time=72:00:00, nodes=1, ntasks-per-node=80, (threads-per-core=2)</td>
+  </tr>
+  <tr>
+    <td>dev_gpu_4</td>
+    <td>gpu_4</td>
+    <td>time=10, mem-per-gpu=94000mb, cpu-per-gpu=20</td>
+    <td></td>
+    <td>time=30, nodes=1, mem=376000mb, ntasks-per-node=40, (threads-per-core=2)
+    1 nodes are reserved for this queue. Only for development, i.e debugging or
+    performance optimization</td>
+  </tr>
+  <tr>
+    <td>gpu_4</td>
+    <td>gpu_4</td>
+    <td>time=10, mem-per-gpu=94000mb, cpu-per-gpu=20</td>
+    <td></td>
+    <td>time=48:00:00, mem=376000mb, nodes=14, ntasks-per-node=40, (threads-per-core=2)</td>
+  </tr>
+  <tr>
+    <td>gpu_8</td>
+    <td>gpu_8</td>
+    <td>time=10, mem-per-gpu=94000mb, cpu-per-gpu=10</td>
+    <td></td>
+    <td>time=48:00:00, mem=752000mb, nodes=10, ntasks-per-node=40, (threads-per-core=2)</td>
+  </tr>
+</table>
+
+<hr>

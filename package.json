@@ -1,0 +1,22 @@
+{
+  "name": "wiki_he",
+  "version": "1.0.0",
+  "description": "HE Wiki sites",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "local": "./bin/config.sh",
+    "prod": "./bin/config.sh -p",
+    "sync": "npm run prod && ./bin/sync.sh && npm run local"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}

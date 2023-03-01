@@ -1,0 +1,38 @@
+<h1>ANSYS on bwUniCluster 2.0</h1>
+<h2>Reaching HE ANSYS license servers from bwUniCluster over a
+  <a href="bwUniCluster/license.html#ssh-tunnel">SSH tunnel</a>.
+</h2>
+
+<p>ANSYS packages are connected to university's FLEXlm servers through two ports: 1055 and 2325.</p>
+
+<p>Besides these 2 ports, an extra port, required by the FLEXlm daemon, should be tunneled as well.
+  In the example below we named it DAEMON_PORT and set it to an arbitrary port, 4a9100.
+</p>
+
+<p>This port is either random or, usually configured by the license servers administrator. Later in the scripts 
+  it will be referred with a placeholder <code>&ltDAEMON_PORT&gt</code>
+</p>
+
+<p>The following command will create an SSH master control socket with the respective ports tunneled
+  through the <code>comserver.hs-esslingen.de</code>:
+</p>
+
+<p><mark>Useful:</mark> SSH-Tunnel will need a passwordless connection from the cluster to the
+  <code>comserver.hs-esslingen.de</code> through a <a href="bwUniCluster/license.html#ssh-key">SSH-key</a>.
+</p>
+
+<pre>
+  DAEMON_PORT=49100
+  ssh -MS ansys-socket -fnNT -L 2325:lizenz-ansys.hs-esslingen.de:2325 \
+  -L 1055:lizenz-ansys.hs-esslingen.de:1055 -L \
+  ${DAEMON_PORT}:lizenz-ansys.hs-esslingen.de:${DEAMON_PORT} \
+  userID@comserver.hs-esslingen.de
+</pre>
+
+<p>where, <code>userID</code> is the id of the user on <code>comserver.hs-esslingen.de</code></p>
+
+<p>After you finish your simulations, don't forget to close the socket with:</p>
+
+<pre>ssh -S tunnel-socket -O exit userID@comserver.hs-esslingen.de</pre>
+
+<hr>
