@@ -19,7 +19,8 @@
     FLEXlm Daemon Port - <code>&ltD_PORT&gt</code>
   </li>
 </ul>
-<p>FLEXlm DAEMON_PORT variable will be </p>
+
+<p><strong>Note:</strong> You will also have to load <code>system/ssh_wrapper/0.1</code> to allow cfx5solve node-communication over ssh.</p>
 
 <pre>
 #!/bin/bash
@@ -46,6 +47,7 @@ echo "Starting at "
 date
 
 # load the software package
+module load system/ssh_wrapper/0.1
 module load cae/ansys/2022R2_no_license
 
 HE_USER_ID=&ltUSER_ID&gt
@@ -70,7 +72,7 @@ export ANSYSLI_SERVERS=2325@localhost
 export jms_nodes=`srun hostname -s`
 export hostslist=`echo $jms_nodes | sed "s/ /,/g"`
 
-cfx5solve -batch -def $INPUT -par-dist ${hostslist} -start-method "Intel MPI Distributed Parallel"
+cfx5solve -batch -def $INPUT -par-dist ${hostslist} 
 
 # close the SSH control socket
 ssh -S ${SOCKET_NAME} -O exit ${HE_USER_ID}@${HE_COM_SERVER}

@@ -42,7 +42,7 @@ ${HE_USER_ID}@${HE_COM_SERVER}
 export ANSYSLMD_LICENSE_FILE=1055@localhost
 export ANSYSLI_SERVERS=2325@localhost
 
-cfx5solve -batch -def $INPUT -part=${SLURM_NTASKS} -start-method "Intel MPI Local Parallel"
+cfx5solve -batch -def $INPUT -part=${SLURM_NTASKS} 
 
 # close the SSH control socket
 ssh -S ${SOCKET_NAME} -O exit ${HE_USER_ID}@${HE_COM_SERVER}

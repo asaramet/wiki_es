@@ -23,6 +23,7 @@ date
 
 # load the software package
 module load cae/ansys/2022R2_no_license
+module load system/ssh_wrapper/0.1
 
 HE_USER_ID=<USER_ID>
 HE_COM_SERVER='comserver.hs-esslingen.de'
@@ -46,7 +47,7 @@ export ANSYSLI_SERVERS=2325@localhost
 export jms_nodes=`srun hostname -s`
 export hostslist=`echo $jms_nodes | sed "s/ /,/g"`
 
-cfx5solve -batch -def $INPUT -par-dist ${hostslist} -start-method "Intel MPI Distributed Parallel"
+cfx5solve -batch -def $INPUT -par-dist ${hostslist} 
 
 # close the SSH control socket
 ssh -S ${SOCKET_NAME} -O exit ${HE_USER_ID}@${HE_COM_SERVER}
